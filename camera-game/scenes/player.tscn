@@ -1,0 +1,68 @@
+[gd_scene format=3 uid="uid://dy7kh64wrp3g5"]
+
+[ext_resource type="Script" uid="uid://dplmskwogi1vl" path="res://scenes/player.gd" id="1_3vyb7"]
+[ext_resource type="Script" uid="uid://uwyb814x5pse" path="res://scenes/photo_ui.gd" id="2_qhqgy"]
+[ext_resource type="Script" uid="uid://b4ra53mt1t7jw" path="res://scenes/sub_viewport_container.gd" id="3_qhqgy"]
+
+[sub_resource type="CapsuleShape3D" id="CapsuleShape3D_g4v7s"]
+radius = 0.7
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_o5qli"]
+albedo_color = Color(0.023529412, 0, 1, 1)
+
+[sub_resource type="CapsuleMesh" id="CapsuleMesh_g4v7s"]
+
+[sub_resource type="BoxMesh" id="BoxMesh_g4v7s"]
+size = Vector3(0.5, 0.5, 0.5)
+
+[sub_resource type="CylinderMesh" id="CylinderMesh_g4v7s"]
+
+[node name="Player" type="CharacterBody3D" unique_id=315437397 node_paths=PackedStringArray("aim_pivot")]
+script = ExtResource("1_3vyb7")
+aim_pivot = NodePath("Aim")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="." unique_id=1986329291]
+shape = SubResource("CapsuleShape3D_g4v7s")
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="." unique_id=1399775665]
+material_override = SubResource("StandardMaterial3D_o5qli")
+mesh = SubResource("CapsuleMesh_g4v7s")
+
+[node name="MeshInstance3D2" type="MeshInstance3D" parent="." unique_id=831322860]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.0085192025, 0.37627268, -0.34097642)
+mesh = SubResource("BoxMesh_g4v7s")
+
+[node name="RemoteTransform3D" type="RemoteTransform3D" parent="." unique_id=288109379]
+update_rotation = false
+
+[node name="Aim" type="Node3D" parent="." unique_id=1911752948]
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="Aim" unique_id=1811036898]
+transform = Transform3D(0.245, 0, 0, 0, 0.245, 0, 0, 0, 0.245, 0, 0, -0.7373467)
+mesh = SubResource("CylinderMesh_g4v7s")
+
+[node name="PhotoSystem" type="Node3D" parent="Aim" unique_id=290658330]
+
+[node name="PhotoUI" type="CanvasLayer" parent="Aim/PhotoSystem" unique_id=1968609341 node_paths=PackedStringArray("photo_cam_pos", "photo_camera", "player")]
+follow_viewport_enabled = true
+script = ExtResource("2_qhqgy")
+photo_cam_pos = NodePath("../../MeshInstance3D")
+photo_camera = NodePath("SubViewportContainer/SubViewport/Camera3D")
+player = NodePath("../../..")
+
+[node name="SubViewportContainer" type="SubViewportContainer" parent="Aim/PhotoSystem/PhotoUI" unique_id=984670671 node_paths=PackedStringArray("photo_viewport", "photo_camera")]
+offset_left = 19.0
+offset_top = 35.0
+offset_right = 531.0
+offset_bottom = 547.0
+script = ExtResource("3_qhqgy")
+photo_viewport = NodePath("SubViewport")
+photo_camera = NodePath("SubViewport/Camera3D")
+metadata/_edit_use_anchors_ = true
+
+[node name="SubViewport" type="SubViewport" parent="Aim/PhotoSystem/PhotoUI/SubViewportContainer" unique_id=26728032]
+handle_input_locally = false
+render_target_update_mode = 4
+
+[node name="Camera3D" type="Camera3D" parent="Aim/PhotoSystem/PhotoUI/SubViewportContainer/SubViewport" unique_id=419847606]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, -0.67831534)

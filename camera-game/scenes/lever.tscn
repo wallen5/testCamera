@@ -1,0 +1,24 @@
+[gd_scene format=3 uid="uid://bblxieb15opje"]
+
+[ext_resource type="Script" uid="uid://bgmijgyt4l1hg" path="res://scripts/lever.gd" id="1_4kwec"]
+
+[sub_resource type="BoxMesh" id="BoxMesh_g4v7s"]
+size = Vector3(0.2, 1, 0.5)
+
+[sub_resource type="BoxMesh" id="BoxMesh_4kwec"]
+size = Vector3(0.2, 0.8, 0.1)
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_g4v7s"]
+
+[node name="Lever" type="StaticBody3D" unique_id=598843475]
+script = ExtResource("1_4kwec")
+
+[node name="Box" type="MeshInstance3D" parent="." unique_id=1617552413]
+mesh = SubResource("BoxMesh_g4v7s")
+
+[node name="Handle" type="MeshInstance3D" parent="." unique_id=1307837840]
+transform = Transform3D(-0.50000006, 0.8660254, 0, -0.8660254, -0.50000006, 0, 0, 0, 1, 0, 0, 0)
+mesh = SubResource("BoxMesh_4kwec")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="." unique_id=1572250754]
+shape = SubResource("BoxShape3D_g4v7s")
